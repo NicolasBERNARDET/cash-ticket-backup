@@ -1,4 +1,5 @@
 import logging
+from typing import Tuple, Union
 
 from flask import Blueprint, request
 
@@ -16,11 +17,11 @@ logger = logging.getLogger(__name__)
 
 @upload_blueprint.route('/upload', methods=['POST'])
 @required_params(UploadSchema())
-def upload_document():
+def upload_document() -> Union[str, Tuple[str, int]]:
     try:
         data = request.get_json()
 
-        # Récupérer les données XML et le nom du document depuis la requête
+        # Get informations from request
         xml_data = data.get('xml_data')
         filename = data.get('filename')
         container_name = data.get('client_name')

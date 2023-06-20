@@ -7,7 +7,7 @@ class BlobStorageClient:
     def __init__(self, settings: AzureObjectStorageSettings) -> None:
         self.blob_service_client = BlobServiceClient.from_connection_string(settings.connection_string)
 
-    def upload_blob(self, data, filename, container_name: str):
+    def upload_blob(self, data: str, filename: str, container_name: str):
         try:
             # create container if not exist
             if not self.blob_service_client.get_container_client(container_name).exists():

@@ -13,9 +13,12 @@ class StorageService:
     def __init__(self):
         self.blob_client = BlobStorageClient(AzureObjectStorageSettings())
 
-    def store_document(self, document: Document, document_type: DocumentType, container_name: str):
+    def store_document(self, document: Document, document_type: DocumentType, container_name: str) -> None:
+        data: str
+        extension: str
+
         if document_type == DocumentType.JSON:
-            json_data = document.to_json()
+            json_data: str = document.to_json()
             if document.conversion_type == DocumentType.JSON:
                 data = json_data
                 extension = document_type.value.lower()
@@ -45,6 +48,5 @@ class StorageService:
         else:
             logger.warning("The file name does not appear to contain a creation date.")
 
-        self.blob_client.upload_blob(data,
-                                     f'{computer_id}/{document_name}/{creation_date}/{document.filename}.{extension}',
-                                     container_name)
+        blob_path =  f'{computer_id}/{document_name}/{creation_date}/{document.filename}.{extension}'
+        self.blob_client.upload_blob(data, blob_path, container_name)

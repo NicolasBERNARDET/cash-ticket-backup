@@ -8,7 +8,7 @@ class Document:
         self.filename: str = filename
         self.conversion_type: DocumentType = DocumentType.XML
 
-    def to_json(self):
+    def to_json(self) -> str:
         success, converted_data = convert_to_json(self.xml_data)
         if success:
             self.conversion_type = DocumentType.JSON
@@ -16,7 +16,7 @@ class Document:
             self.conversion_type = DocumentType.XML
         return converted_data
 
-    def to_xml(self):
+    def to_xml(self) -> str:
         self.conversion_type = DocumentType.XML
         return self.xml_data
 

@@ -7,7 +7,7 @@ class UploadSchema(Schema):
     client_name = fields.String(required=True)
 
     @validates('client_name')
-    def validate_client_name(self, value):
+    def validate_client_name(self, value: str) -> None:
         if not isinstance(value, str):
             raise ValidationError('The client name must be a string.')
 
